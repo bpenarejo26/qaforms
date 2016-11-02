@@ -1,0 +1,185 @@
+<?php
+include("connection.php");
+session_start();
+	
+if (isset($_POST['submit'])) {
+$OR = $_POST['OR'];
+$TM = $_POST['TM'];
+
+$insert_query = "INSERT INTO `qualitycheck` (`TransNo`, `ORNo`, `Source`, `Brand`, `Assoc`, `Manager`, `Checker`, `EvalDate`, `Accuracy`, `CustIns`, `OveRep`, `TexSiz`, `PosNeg`, `Size`, `Loca`, `Colo`, `Cont`, `FilPre`, `OrdDet`, `ImpSiz`, `MocBox`, `UplFil`, `UplPro`) VALUES (NULL, 'sample1', '1', '1', '1', '1', '1', '2016-05-11', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1')";
+$insert_connect = mysql_query ($insert_query, $connect);
+$data_result = mysql_fetch_array ($insert_connect) ; 
+?>
+<html>
+<head>
+<form name ="survey" method = "post" ><br>
+ART Quality Checklist Form
+<br></br>
+<body>
+<table style="height: 97px;" width="600">
+<tbody>
+<tr>
+<td>Order Number</td>
+<td>&nbsp;<input type = "text" name = "OR"/></td>
+<td>&nbsp;Team Manager</td>
+<td>&nbsp; <?php { while($row = mysql_fetch_array ($manager_connect)) 
+echo '<option   value=\"'.$manager_result['PosCode'].'">'.$manager_result['FullName'].'</option>'; }
+?>
+<? }?> 
+</td>
+</tr>
+<tr>
+<td>&nbsp;Source</td>
+<td>&nbsp;<select name="SO">
+  <option value="0">Require Proof</option>
+  <option value="1">Proof Changes</option>
+</select></td>
+<td>&nbsp;Quality Checker</td>
+<td>&nbsp;<input type = "text" name = "QC"/></td>
+</tr>
+<tr>
+<td>&nbsp;Brand</td>
+<td>&nbsp;<select name="BR">
+  <option value="0">Discount Mugs</option>
+  <option value="1">Branders</option>
+  <option value="1">Bel Promo</option>
+</select></td>
+<td>&nbsp;Date Evaluated</td>
+<td>&nbsp;<input type = "date" name = "DE"/></td>
+</tr>
+<tr>
+<td>&nbsp;Associate</td>
+<td>&nbsp;<input type = "text" name = "AS"/></td>
+<td>&nbsp;Process Accuracy</td>
+<td>&nbsp;<input type = "radio" name = "R1"/><input type = "radio" name = "R2"/></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+PROCESS ARTWORK
+<br>
+
+</br>
+1.0 CUSTOMER'S INTRUCTIONS 
+<select name="CI">
+  <option value="0">Y</option>
+  <option value="1">N</option>
+</select>
+<br>
+1.1 Customer's Instructions 
+<br>
+The adjusted artwork refflects the insturctions found on Job Details, 
+<br>
+Art Work, and Input Notes.
+<br>
+<br>
+2.0 ART STANDARDS
+<br>
+2.1 Overall Representation
+<select name="CR">
+  <option value="0">Y</option>
+  <option value="1">N</option>
+</select>
+<br>
+The adjusted artwork reflects the insturctions found on Job Details,
+<br>
+Art Work, and Input Notes.
+<br>
+2.2 Text Sizes
+<select name="TS">
+  <option value="0">Y</option>
+  <option value="1">N</option>
+</select>
+<br>
+Text sizes are at least the minimum font size required for the imprint
+<br>
+method or item category.
+<br>
+2.3 Positiove and Negative Details
+<select name="PN">
+  <option value="0">Y</option>
+  <option value="1">N</option>
+</select>
+<br>
+All positive details in the artworks are at least thick as 1 pt strokes; as 
+<br>
+all negative details are as thick as 2 pts stroke.
+<br>
+3.0 MOCK UP
+<br>
+3.1 Size 
+<br>
+The size of the artworks is proportional to the dimensions of the 
+<br>
+artwork.
+<br>
+3.2 Location
+<br>
+The artwork is located on the items with reference to the sample 
+<br>
+images on the website.
+<br>
+3.3 Color
+<br>
+Color/s are properly represented in accordance to client's choices.
+<br>
+4.1 Content
+<br>
+4-1-A Art Copy/Order Details
+<br>
+4-1-B Adjusted Artwork
+<br>
+4-1-C
+<br>
+Mock Up (optional)
+<br>
+4.2 Film Presentation
+<br>
+4-2-A Artboard Size
+<br>
+4-2-B 
+<br>
+Template/Layout
+<br>
+5.0 PROOF
+<br>
+5-1 Order Details
+<br>
+The adjusted artwork refflects the insturctions found on the Job Details,
+<br>
+Art Work, and input Notes.
+<br>
+5-2 Imprint Size/s
+<br>
+The size of the artwork is smaller or equal to the imprint area of the 
+<br>
+item.
+<br>
+5-3 Art Boxes 
+<br>
+The artboxes used correspond to the correct imprint locations.
+<br>
+5-4 
+<br>
+The mock up boxes correspond to the artboxes used on the proof.
+<br>
+6.0 UPLOADS
+<br>
+6-1 Upload Film
+<br>
+6-1-A Back Slide (if applicable)
+<br>
+6-1-B Underlay ?(if applicable)
+<br>
+6-2 Uploaded PROOF
+<br>
+<input type = "submit" name = "submit" value = "Save"/>
+</form>
+</body>
+</head>
+</html>

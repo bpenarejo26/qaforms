@@ -1,0 +1,149 @@
+<?php
+include("connection.php");
+session_start();
+if($_SERVER["REQUEST_METHOD"] == "POST")	
+
+	
+if(isset($_POST['submit'])) {
+
+$OR = $_POST['OR'];
+$SO = $_POST['SO'];
+$BR = $_POST['BR'];
+$AS = $_POST['AS'];
+$TM = $_POST['TM'];
+$QC = $_POST['QC'];
+$DE = $_POST['DE'];
+$R1 = $_POST['R1'];
+$CI = $_POST['CI'];
+$OV = $_POST['OV'];
+$TS = $_POST['TS'];
+$PN = $_POST['PN'];
+
+$insert = "INSERT INTO `qualitycheck` (`TransNo`, `ORNo`, `Source`, `Brand`, `Assoc`, `Manager`, `Checker`, `EvalDate`, `Accuracy`, `CustIns`, `OveRep`, `TexSiz`, `PosNeg`, `Size`, `Loca`, `Colo`, `Cont`, `FilPre`, `OrdDet`, `ImpSiz`, `MocBox`, `UplFil`, `UplPro`) VALUES 
+(NULL, '$OR', '$SO', '$BR', '$AS', '$TM', '$QC', '$DE', '$R1', '$CI', '$OV', '$TS', '$PN', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1')";
+$query = mysql_query ($insert,$connect);
+
+echo "Saved records";
+
+}
+session_destroy();
+?>
+
+
+<html>
+<head>
+<form name ="survey" method = "post" ><br>
+ART Quality Checklist Form
+<br></br>
+<body>
+<table style="height: 97px;" width="600">
+<tbody>
+<tr>
+<td>Order Number</td>
+<td>&nbsp;<input type = "text" name = "OR"/></td>
+<td>&nbsp;Team Manager</td>
+<td>&nbsp;
+<select name="TM">
+  <option value="1">Sample Manager 1</option>
+  <option value="2">Sample Manager 2</option>
+  <option value="3">Sample Manager 3</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>&nbsp;Source</td>
+<td>&nbsp;<select name="SO">
+  <option value="1">Require Proof</option>
+  <option value="2">Proof Changes</option>
+</select>
+</td>
+<td>&nbsp;Quality Checker</td>
+<td>&nbsp;<select name="QC">
+  <option value="1">Sample Checker 1</option>
+  <option value="2">Sample Checker 2</option>
+  <option value="3">Sample Checker 3</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>&nbsp;Brand</td>
+<td>&nbsp;<select name="BR">
+  <option value="1">Discount Mugs</option>
+  <option value="2">Branders</option>
+  <option value="3">Bel Promo</option>
+</select></td>
+<td>&nbsp;Date Evaluated</td>
+<td>&nbsp;<input type = "date" name = "DE"/></td>
+</tr>
+<tr>
+<td>&nbsp;Associate</td>
+<td>&nbsp;<select name="AS">
+  <option value="1">Associate 1</option>
+  <option value="2">Associate 2</option>
+  <option value="3">Associate 3</option>
+</select></td>
+<td>&nbsp;Process Accuracy</td>
+<td>&nbsp;<input type = "radio" name = "R1"/><input type = "radio" name = "R2"/></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+PROCESS ARTWORK
+<br>
+
+</br>
+1.0 CUSTOMER'S INTRUCTIONS 
+<br>
+1.1 Customer's Instructions 
+<select name="CI">
+  <option value="Y">Y</option>
+  <option value="N">N</option>
+</select>
+<br>
+The adjusted artwork refflects the insturctions found on Job Details, 
+<br>
+Art Work, and Input Notes.
+<br>
+<br>
+2.0 ART STANDARDS
+<br>
+2.1 Overall Representation
+<select name="OV">
+  <option value="Y">Y</option>
+  <option value="N">N</option>
+</select>
+<br>
+The adjusted artwork reflects the insturctions found on Job Details,
+<br>
+Art Work, and Input Notes.
+<br>
+2.2 Text Sizes
+<select name="TS">
+  <option value="Y">Y</option>
+  <option value="N">N</option>
+</select>
+<br>
+Text sizes are at least the minimum font size required for the imprint
+<br>
+method or item category.
+<br>
+2.3 Positiove and Negative Details
+<select name="PN">
+  <option value="Y">Y</option>
+  <option value="N">N</option>
+</select>
+<br>
+All positive details in the artworks are at least thick as 1 pt strokes; as 
+<br>
+all negative details are as thick as 2 pts stroke.
+
+<input type = "submit" name = "submit" value = "Save"/>
+</form>
+</body>
+</head>
+</html>
