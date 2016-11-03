@@ -79,7 +79,7 @@ else {
 	if(($row['Level'] == 1) && ($row['Disable'] == TRUE)){
 	echo $row['Disable']; 
 	$id = $row['EmpID']; $y = $row['Manager'];
-	header("Location:http://10.16.1.102:8085/qaforms/admin.php?id=".$id);						
+	header("Location:http://10.16.1.102:8082/qaforms/admin.php?id=".$id);						
 							}
 							else
 
