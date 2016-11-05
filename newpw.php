@@ -32,7 +32,7 @@ table {
     </tr>
     <tr>
       <th width="30%" scope="row">Old password:</th>
-      <td width="70%"><input type = "text" name = "old" /> </td>
+      <td width="70%"><input type = "password" name = "old" /> </td>
     </tr>
     <tr>
       <th scope="row">New password:</th>
@@ -50,7 +50,7 @@ table {
       <th height="100" colspan="2" scope="col"><img  class = "center fit" src="1-02.jpg" > </th>
     </tr>
   </tbody>
-  <a align= "center" href="http://10.16.7.123:8888/branders/login.php">Back to home page</a>
+  <a align= "center" href="login.php">Back to Log-in</a>
 </table>
 </form>
 </body>
@@ -71,21 +71,22 @@ if (!$connect) {
 
 if(isset($_POST['edit'])) {
 $old = $_POST['old'];
-//echo $old;
-$select = "select password from employee where empid = '$id' and password ='$old'";
-$result0 = mysqli_query ($connect, $select);
-$row = mysqli_fetch_array ($result0);
-//echo mysqli_num_rows($result0);
-
-if ((mysqli_num_rows($result0) > 0) && (!empty($_POST['pass1']) && ($_POST['pass1'] == $_POST['pass2']))) {	
 $pass1 = $_POST['pass1'];
 $pass2 = $_POST['pass2'];
-$update = "UPDATE employee SET Password='$pass1' WHERE EmpID = '$id'";
-$result = mysqli_query($connect, $update) ;
-echo "You account has been updated! click back home to continue";
+//echo $old;
+$select = "select password from employee where EmpID = '$id'";
+$result0 = mysqli_query ($connect, $select);
+$row = mysqli_fetch_array ($result0); 
+if (((password_verify($old, $row['password']) == TRUE) && mysqli_num_rows($result0) > 0) && (!empty($_POST['pass1']) && ($_POST['pass1'] == $_POST['pass2']))) {	
+$pass = password_hash($_POST['pass1'], PASSWORD_BCRYPT, array("cost" => 10));
+$update = "UPDATE employee SET Password='$pass' WHERE EmpID = '$id'";
+$result = mysqli_query($connect, $update);
+echo "You account has been updated with new password! Please re log-in your account";
 }
 else
 { echo "password not match!";
 }
+
 }
+
 ?>
