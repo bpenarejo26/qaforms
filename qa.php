@@ -114,7 +114,7 @@ if(isset($_POST['out'])){
 	$update = "update logbook set `Time-out` = '$udate' where Ref like '%$auto%' ";
 	$result = mysqli_query($connect, $update);
 	//session_destroy();	
-	header("Location:http://localhost/branders/login.php");
+	header("Location:login.php");
 	}
 	
 ?>
