@@ -12,10 +12,10 @@ if (!$connect) {
 //$id = $_GET['id'];
  $from = $_POST['from'];
  $to = $_POST['to'];
- $d1= $from.":00:00:00";
- $d2= $to.":23:59:59";
- 
-
+ $d1= $from.":00.000";
+ $d2= $to.":59.997";
+ $sart = $_POST['sart'];
+ //echo $sart;
 /*$sql = "SELECT fullname as name from qualitycheck inner join employee on employee.EmpID = qualitycheck.Manager";
 $result = mysqli_query($connect, $sql);
 $sql = "SELECT poscode FROM employee where EmpID = '$id';";
@@ -23,19 +23,18 @@ $result5 = mysqli_query($connect, $sql);
 $row5 = mysqli_fetch_array ($result5);
  //echo $row2['name'];
 */
- $sql = "SELECT `TransNo`, `ORNo`, `Source`, `Brand`, `Assoc`, `Manager`, `Checker`, `EvalDate`, `Accuracy`, `CustIns`, `OveRep`, `TexSiz`, `PosNeg`, `Size`, `Loca`, `Colo`, `ArtOrd`, `AdjArt`, `MocUp`, `ArtSiz`, `TemLay`, `OrdDet`, `ImpSiz`, `ArtBox`, `MocBox`, `UplFil`, `BacSli`, `Und`, `UplPro`, `AddNote`, `SVG`, `EDate` FROM `qualitycheck`WHERE EvalDate BETWEEN '$d1' and '$d2'";
+ $sql = "SELECT `TransNo`, `ORNo`, `Source`, `Brand`, `Assoc`, `Manager`, `Checker`, `EvalDate`, `Accuracy`, `CustIns`, `OveRep`, `TexSiz`, `PosNeg`, `Size`, `Loca`, `Colo`, `ArtOrd`, `AdjArt`, `MocUp`, `ArtSiz`, `TemLay`, `OrdDet`, `ImpSiz`, `ArtBox`, `MocBox`, `UplFil`, `BacSli`, `Und`, `UplPro`, `AddNote`, `SVG`, `EDate`, `TransID`  FROM `qualitycheck`WHERE EvalDate BETWEEN '$d1' and '$d2' and Manager = '$sart'";
 $result2 = mysqli_query ($connect, $sql);
 $row = mysqli_fetch_array ($result2);
 //echo $row['ORNo'];
 //echo $row['Fullname'];
 $count = mysqli_num_rows($result2); 
-?>
+echo "Total". " ".$count;?>
 
 
 <html>
 <head>
 <form name ="convert" method = "POST" />
-<a href="http://10.16.1.102:8082/qaforms/sample.php?d1=<?php echo $d1;?>&d2=<?php echo $d2;?>">Convert to CSV file</a>
 </head>
 <style type="text/css">
 body {
