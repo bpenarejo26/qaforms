@@ -5,7 +5,7 @@ session_start();
 $id = $_GET['id'];
 $auto = $_GET['x'];
 //echo $auto;
-if($id == NULL || $auto == NULL) { header("Location:http://localhost/branders/login.php"); }
+if($id == NULL || $auto == NULL) { header("Location:login.php"); }
 if($_SERVER["REQUEST_METHOD"] == "POST")	
 	
 // Create connection
