@@ -1,11 +1,6 @@
 <?php
 include("connection.php");
-ob_start();
 session_start();
-$id = $_GET['id'];
-$auto = $_GET['x'];
-//echo $auto;
-if($id == NULL || $auto == NULL) { header("Location:http://localhost/branders/login.php"); }
 if($_SERVER["REQUEST_METHOD"] == "POST")	
 	
 // Create connection
@@ -14,131 +9,181 @@ $connect = mysqli_connect($servername, $username, $password, $dbname);
 if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$sql = "SELECT Fullname from employee where PosCode = '4'order by Fullname ASC" ;
+//$id = $_GET['id'];
+ $from = $_POST['from'];
+ $to = $_POST['to'];
+ $d1= $from.":00.000";
+ $d2= $to.":59.997";
+ $sart = $_POST['sart'];
+ //echo $sart;
+/*$sql = "SELECT fullname as name from qualitycheck inner join employee on employee.EmpID = qualitycheck.Manager";
 $result = mysqli_query($connect, $sql);
-$row = mysqli_fetch_array($result);
-$sql2 = "select Manager from employee group by Manager order by Manager ASC";
-$result2 = mysqli_query($connect, $sql2);
-$row2 = mysqli_fetch_array($result2);
-?>
-<!DOCTYPE html>
-<html lang="en">
+$sql = "SELECT poscode FROM employee where EmpID = '$id';";
+$result5 = mysqli_query($connect, $sql);
+$row5 = mysqli_fetch_array ($result5);
+ //echo $row2['name'];
+*/
+ $sql = "SELECT `TransNo`, `ORNo`, `Source`, `Brand`, `Assoc`, `Manager`, `Checker`, `EvalDate`, `Accuracy`, `CustIns`, `OveRep`, `TexSiz`, `PosNeg`, `Size`, `Loca`, `Colo`, `ArtOrd`, `AdjArt`, `MocUp`, `ArtSiz`, `TemLay`, `OrdDet`, `ImpSiz`, `ArtBox`, `MocBox`, `UplFil`, `BacSli`, `Und`, `UplPro`, `AddNote`, `SVG`, `EDate`, `TransID`  FROM `qualitycheck`WHERE EvalDate BETWEEN '$d1' and '$d2' and Assoc = '$sart'";
+$result2 = mysqli_query ($connect, $sql);
+$row = mysqli_fetch_array ($result2);
+//echo $row['ORNo'];
+//echo $row['Fullname'];
+$count = mysqli_num_rows($result2); 
+echo "Total". " ".$count;?>
+
+
+<html>
 <head>
-<a align= "center" href="http://localhost/branders/qa.php?id=<?php echo $_GET['id'] ;?>&x=<?php echo $_GET['x'];?>">Back to QC Form</a>
-<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-<link rel="stylesheet" type="text/css" href="./jquery.datetimepicker.css"/>
-<style type="text/css">
-
-	background-color: red !important;
-.custom-date-style {
-}
-
-.input{	
-}
-.input-wide{
-	width: 500px;
-}
-       
-.fit {
-  max-width: 100%;
-  max-height: 100%;
-}
-.center {
-  display: block;
-  margin-top: 0.01em;
-}
-table {
-	font-size: 14px;
-	line-height: 24px;
-	margin: 0.01em auto;
-	text-align: left;
-}
-
-</style>
-<meta charset="utf-8">
-<title>BEL USA - Manila QA Form</title>
+<form name ="convert" method = "POST" />
 </head>
-<form name ="date-picker" method="POST" action = "report.php">
+<style type="text/css">
+body {
+	background: #fafafa url(http://jackrugile.com/images/misc/noise-diagonal.png);
+	color: #444;
+	font: 100%/30px 'Helvetica Neue', helvetica, arial, sans-serif;
+	text-shadow: 0 1px 0 #fff;
+}
 
+strong {
+	font-weight: bold; 
+}
 
+em {
+	font-style: italic; 
+}
+
+table {
+	background: #f5f5f5;
+	border-collapse: separate;
+	box-shadow: inset 0 1px 0 #fff;
+	font-size: 12px;
+	line-height: 24px;
+	margin: 30px auto;
+	text-align: left;
+}	
+
+th {
+	background: url(http://jackrugile.com/images/misc/noise-diagonal.png), linear-gradient(#0dac85, #0dac85);
+	border-left: 1px solid #555;
+	border-right: 1px solid #777;
+	border-top: 1px solid #555;
+	border-bottom: 1px solid #333;
+	box-shadow: inset 0 1px 0 #999;
+	color: #fff;
+  font-weight: bold;
+	padding: 10px 15px;
+	position: relative;
+	text-shadow: 0 1px 0 #000;	
+}
+
+th:after {
+	background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
+	content: '';
+	display: block;
+	height: 25%;
+	left: 0;
+	margin: 1px 0 0 0;
+	position: absolute;
+	top: 25%;
+	width: 100%;
+}
+
+th:first-child {
+	border-left: 1px solid #777;	
+	box-shadow: inset 1px 1px 0 #999;
+}
+
+th:last-child {
+	box-shadow: inset -1px 1px 0 #999;
+}
+
+td {
+	border-right: 1px solid #fff;
+	border-left: 1px solid #e8e8e8;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #e8e8e8;
+	padding: 10px 15px;
+	position: relative;
+	transition: all 300ms;
+}
+
+td:first-child {
+	box-shadow: inset 1px 0 0 #fff;
+}	
+
+td:last-child {
+	border-right: 1px solid #e8e8e8;
+	box-shadow: inset -1px 0 0 #fff;
+}	
+
+tr {
+	background: url(http://jackrugile.com/images/misc/noise-diagonal.png);	
+}
+
+tr:nth-child(odd) td {
+	background: #f1f1f1 url(http://jackrugile.com/images/misc/noise-diagonal.png);	
+}
+
+tr:last-of-type td {
+	box-shadow: inset 0 -1px 0 #fff; 
+}
+
+tr:last-of-type td:first-child {
+	box-shadow: inset 1px -1px 0 #fff;
+}	
+
+tr:last-of-type td:last-child {
+	box-shadow: inset -1px -1px 0 #fff;
+}	
+
+tbody:hover td {
+	color: transparent;
+	text-shadow: 0 0 3px #aaa;
+}
+
+tbody:hover tr:hover td {
+	color: #444;
+	text-shadow: 0 1px 0 #fff;
+}
+</style>
 <body>
-<table width="50%" border="0">
-  <tbody>
-    <tr>
-      <th height="100" colspan="4" scope="col"><img  class = "center fit" src="1-01.jpg" > </th>
-    </tr>
-    <tr>
-      <th scope="row">Select Artis Name:</th>
-	  <td><?php echo "<select name=sart value='sart'tabindex=2>";
-	   if(isset($_POST['submit']) && (!empty($_POST['sart']))) { echo "<option value='".$_POST['sart']."'>".$_POST['sart']."</option>";}
-			if (mysqli_num_rows($result) > 0) {
-		
-				while($row = mysqli_fetch_assoc($result)) {
-					echo "<option value='".$row[Fullname]."'>$row[Fullname]</option>"; 
-														  }
-											  } 
-		    else {
-					echo "0 results";
-				 }
-					echo "</select>"; ?></td>
-			
-    </tr>
-	<tr>
-      <th width="30%" scope="row">Date From:</th>
-      <td><input type="text" value="" id="datetimepicker" name ="from"/></td>
-    </tr>
-	<tr>
-      <th width="30%" scope="row">Date To:</th>
-      <td><input type="text" value="" id="datetimepicker2" name ="to"/></td>
-    </tr>
-    <tr>
-      <th scope="row">&nbsp;</th> 
-      <td><input type = "submit" name ="search" value = "Generate"/></td>
-    </tr>
-	<tr>
-      <th height="100" colspan="2" scope="col"><img  class = "center fit" src="1-02.jpg" > </th>
-    </tr>
-  </tbody>
 
+<table>
+<tr>
+<th scope="row"><b>ORNo</th>
+      <th> <b> Associate</th>
+      <th> <b> Quality Checker</th>
+	  <th> <b> Evaluation Date</th>
+	  <th> <b>Accuracy</th>
+	  <th> <b> Customer Instruction</th>
+	  <th> <b> ART Standard</th>
+	  <th> <b> Mock Up</th>
+	  <th> <b> FILM</th>
+	  <th> <b> PROOF</th>
+	  <th> <b> REMARKS</th>
+     
+	  </tr>
+	  <?php  do { ;?>
+<tr>	
+ <td align="Left"><?php echo $row['ORNo']; ?></td>
+  <td align="Left"><?php echo $row['Assoc']; ?></td>
+   <td align="Left"><?php echo $row['Checker']; ?></td>
+    <td align="Left"><?php echo $row['EvalDate']; ?></td>
+	 <td align="Left"><?php echo $row['Accuracy']; ?></td>
+	  <td align="Left"><?php echo $row['CustIns']; ?></td>
+	   <td align="Left"><?php echo $row['OveRep']; ?></td>
+	    <td align="Left"><?php echo $row['PosNeg']; ?></td>
+  <td align="Left"><?php echo $row['Size'];  ?></td>
+   <td align="Left"><?php echo $row['Loca'];  ?></td>
+    <td align="Left"><?php echo $row['AddNote'];  ?></td>
+	
+	
+	</tr>
+<tr>	
+<?php } while($row = mysqli_fetch_array ($result2)) ; 
+ ?> </tr>
+ </table>
 
-
-</tbody>
-</table>
-<script src="./jquery.js"></script>
-<script src="build/jquery.datetimepicker.full.js"></script>
-<script>/*
-window.onerror = function(errorMsg) {
-	$('#console').html($('#console').html()+'<br>'+errorMsg)
-}*/
-
-$.datetimepicker.setLocale('en');
-
-$('#datetimepicker_format').datetimepicker({value:'2015/04/15 05:03', format: $("#datetimepicker_format_value").val()});
-console.log($('#datetimepicker_format').datetimepicker('getValue'));
-
-$("#datetimepicker_format_change").on("click", function(e){
-	$("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({format: $("#datetimepicker_format_value").val()});
-});
-$("#datetimepicker_format_locale").on("change", function(e){
-	$.datetimepicker.setLocale($(e.currentTarget).val());
-});
-
-$('#datetimepicker').datetimepicker({
-dayOfWeekStart : 1,
-lang:'en',
-disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
-startDate:	'2016/01/01'
-});
-$('#datetimepicker').datetimepicker({value:'',step:10});
-$('.some_class').datetimepicker();
-$('#datetimepicker2').datetimepicker({
-dayOfWeekStart : 1,
-lang:'en',
-disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
-startDate:	'2016/12/31'
-});
-$('#datetimepicker2').datetimepicker({value:'',step:10});
-$('.some_class').datetimepicker();
-</script>
 </form>
+</body>
 </html>
