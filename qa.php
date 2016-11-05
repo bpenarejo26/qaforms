@@ -2,8 +2,46 @@
 <html>
 <head>
 
-<title>Branders.com PH</title>
+<title>BEL USA - Manila QA Form</title>
 <style>
+
+ ul{
+        padding: 0;
+        list-style: none;
+        background: #1375bc;
+    }
+    ul li{
+        display: inline-block;
+        position: relative;
+        line-height: 21px;
+        text-align: left;
+    }
+    ul li a{
+        display: block;
+        padding: 8px 25px;
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+    ul li a:hover{
+        color: #fff;
+        background: #939393;
+    }
+    ul li ul.dropdown{
+        min-width: 100%; /* Set width of the dropdown */
+        background: #1375bc;
+        display: none;
+        position: absolute;
+        z-index: 999;
+        left: 0;
+    }
+    ul li:hover ul.dropdown{
+        display: block;	/* Display the dropdown */
+    }
+    ul li ul.dropdown li{
+        display: block;
+    }
+
+
 .centered {
   position: fixed;
   top: 50%;
@@ -14,9 +52,6 @@
 html, body {
     height: 100%;
 }
-
-
-
 html {
     display: table;
     margin-top: 0.01em;
@@ -28,7 +63,6 @@ p {
  font-size: 70%;
  font-family: Arial;
 }
-
 body {
     display: table-cell;
     vertical-align: middle;
@@ -46,8 +80,6 @@ body {
   display: block;
   margin-top: 0.01em;
 }
-
-
 </style>
 <?php
 include("connection.php");
@@ -62,9 +94,8 @@ if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
 $id = $_GET['id'];
-
+$auto = $_GET['x'];
 if($id == NULL) { header("Location:http://10.16.1.102:8085/qaforms/login.php"); }
-
 $sql = "SELECT fullname as name1 FROM employee where poscode = '2'";
 $result = mysqli_query($connect, $sql);
 $row = mysqli_fetch_array($result);
@@ -77,13 +108,35 @@ $sql = "SELECT fullname as name3 FROM employee where poscode = '4' Order by full
 $result4 = mysqli_query($connect, $sql);	
 //echo $id;
 
+if(isset($_POST['out'])){
+	$EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
+	$udate = date('Y-m-d H:i:s',$EasternTimeStamp );
+	$update = "update logbook set `Time-out` = '$udate' where Ref like '%$auto%' ";
+	$result = mysqli_query($connect, $update);
+	//session_destroy();	
+	header("Location:http://localhost/branders/login.php");
+	}
+	
 ?>
 
 <img  class = "center fit" src="1-01.jpg" > 
-
 </head> 
 <body>
-<form name ="survey" method = "POST" action = "#" ><br>
+<form name ="survey" method = "POST" action = "#" >
+<ul>
+        <li><a href="#"tabindex=-1>Home</a></li>
+       
+        <li>
+            <a href="#"tabindex=-1>Report &#9662;</a>
+            <ul class="dropdown">
+				<li><a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">All</a></li>
+                <li><a href="dater.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">Team</a></li>
+                <li><a href="dater_artist.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">Proofer</a></li>
+                
+            </ul>
+			 <li><a href="newpw.php?id=<?php echo $id;?>"tabindex=-1>Change password</a></li>
+			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
+			</ul>
 <table width="100%" border="0">
   <tbody>
     <tr>
@@ -510,8 +563,7 @@ $result4 = mysqli_query($connect, $sql);
 </table>
 <?php $id2 = $_GET['id'];?>
 
-<p><a align= "center" href="http://10.16.1.102:8085/qaforms/dater.php">Click here to view report</a></td>
-<p style="text-align:left"><a href='http://10.16.1.102:8085/qaforms/newpw.php?id=<?php echo $id;?>'>Change password</a></td></p>
+<p>
 
 <img id="the_pic" class="center fit" src="1-02.jpg" > </p>
 
@@ -555,7 +607,6 @@ if (($_POST['CI'] == "N") || ($_POST['OV'] == "N") || ($_POST['TS'] == "N") || (
 	} else {
 		$R1 = "Accurate";
 	}
-
 if (!empty($OR) && ($CI != 1) && ($OV != 1) && ($TS != 1) && ($PN != 1) && ($SI != 1) && ($LO != 1) && ($CD != 1) && ($AO != 1) && ($AA != 1) && ($TL != 1)
 	&& ($MU != 1) && ($AR != 1)&& ($TL != 1)&& ($OD != 1)&& ($IS != 1)&& ($AB != 1) && ($MB != 1) && ($BS != 1)&& ($UD != 1)&& ($UP != 1) && ($SV != 1) && ($UF != 1))
 	{  echo "<script type='text/javascript'>alert('".$OR." : Sucessfully saved!')</script>"; 
@@ -571,7 +622,6 @@ echo("<meta http-equiv='refresh' content='1'>");
  
  } else { 
 echo "<script type='text/javascript'>alert('Error : Please fill-up all required field!')</script>";
-
 }
 	}
 ?>
