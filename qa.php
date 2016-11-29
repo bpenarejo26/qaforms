@@ -95,7 +95,7 @@ if (!$connect) {
 }
 $id = $_GET['id'];
 $auto = $_GET['x'];
-if($id == NULL) { header("Location:http://10.16.1.102:8085/qaforms/login.php"); }
+if($id == NULL) { header("Location:http:login.php"); }
 $sql = "SELECT fullname as name1 FROM employee where poscode = '2'";
 $result = mysqli_query($connect, $sql);
 $row = mysqli_fetch_array($result);
@@ -104,7 +104,7 @@ $result2 = mysqli_query($connect, $sql);
 $sql = "SELECT Fullname, Manager from employee where EmpID = '$id';";
 $result3 = mysqli_query($connect, $sql);
 $row3 = mysqli_fetch_array($result3);
-$sql = "SELECT fullname as name3 FROM employee where poscode = '4' Order by fullname ASC";
+$sql = "SELECT fullname as name3, DMName FROM employee where poscode = '4' Order by fullname ASC";
 $result4 = mysqli_query($connect, $sql);	
 //echo $id;
 
@@ -113,7 +113,7 @@ if(isset($_POST['out'])){
 	$udate = date('Y-m-d H:i:s',$EasternTimeStamp );
 	$update = "update logbook set `Time-out` = '$udate' where Ref like '%$auto%' ";
 	$result = mysqli_query($connect, $update);
-	//session_destroy();	
+	session_destroy();	
 	header("Location:login.php");
 	}
 	
@@ -129,9 +129,8 @@ if(isset($_POST['out'])){
         <li>
             <a href="#"tabindex=-1>Report &#9662;</a>
             <ul class="dropdown">
-				<li><a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">All</a></li>
-                <li><a href="dater.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">Team</a></li>
-                <li><a href="dater_artist.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">Proofer</a></li>
+				<li><a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">Date</a></li>
+                
                 
             </ul>
 			 <li><a href="newpw.php?id=<?php echo $id;?>"tabindex=-1>Change password</a></li>
@@ -157,7 +156,7 @@ if(isset($_POST['out'])){
 			if (mysqli_num_rows($result4) > 0) {
 		
 				while($row4 = mysqli_fetch_assoc($result4)) {
-					echo "<option value='".$row4[name3]."'>$row4[name3]</option>"; 
+					echo "<option value='".$row4[name3]."'>$row4[DMName]</option>"; 
 														  }
 											  } 
 		    else {
@@ -165,7 +164,7 @@ if(isset($_POST['out'])){
 				 }
 					echo "</select>"; ?></td>
       <td><input type = "submit" name = "next3" value = "+" tabindex=-1 />
-	  <?php if(isset($_POST['next3'] )) { $id = "4"; header("Location:http://10.16.1.102:8085/qaforms/register.php?id=".$id); } ?></td>
+	  <?php if(isset($_POST['next3'] )) { $id = "4"; header("Location:register.php?id=".$id); } ?></td>
       <td><strong>Quality Checker</strong></td>
       <td><input type = "text" name = "QC" style="border:none" value ="<?php echo $row3['Fullname'];?>" readonly tabindex=-1/td>
     </tr>
