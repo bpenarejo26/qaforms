@@ -78,17 +78,17 @@ if (password_verify($pass, $row['Password']) == TRUE) {
 if(($row['Level'] == 1) && ($row['Disable'] == TRUE)){
 	//echo $row['Disable']; 
 	$id = $row['EmpID']; $y = $row['Manager'];
-	header("Location:admin.php?id=".$id);						
+	header("Location:http://localhost/branders/admin.php?id=".$id);						
 							}
 							else
 
 							{
 								$auto = generate();
 								if($row['Disable'] == TRUE) {
-								$id = $row['EmpID'];  $id2 = $row['Manager']; header("Location:qa.php?id=".$id."&x=".$auto);
+								$id = $row['EmpID'];  $id2 = $row['Manager']; header("Location:http:qa.php?id=".$id."&x=".$auto);
 								//echo generate();
 
-$insert = "INSERT INTO logbook (`TransNo`, `ID`, `Time-in`, `Ref`, `Time-out`) VALUES ('', '$id', CURRENT_TIMESTAMP, '$auto', '0000-00-00 00:00:00.000000')";
+$insert = "INSERT INTO Logbook (`TransNo`, `ID`, `Time-in`, `Ref`, `Time-out`) VALUES ('', '$id', CURRENT_TIMESTAMP, '$auto', '0000-00-00 00:00:00.000000')";
 $result = mysqli_query($connect,$insert);
 								}
 							}
