@@ -1,5 +1,5 @@
 <?php
-$conn = mysql_connect("localhost","root","");
+$conn = mysql_connect("localhost","root","Fic5#w0F");
 mysql_select_db("branders",$conn);
 $_SERVER["REQUEST_METHOD"] == "POST";
 $d1 = $_GET['d1'];
