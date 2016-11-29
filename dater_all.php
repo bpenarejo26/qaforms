@@ -8,7 +8,7 @@ $auto = $_GET['x'];
 if($id == NULL || $auto == NULL) { header("Location:login.php"); }
 if($_SERVER["REQUEST_METHOD"] == "POST")	
 	
-$connect = mysqli_connect("localhost", "root", "", "branders");  
+$connect = mysqli_connect("localhost", "root", "Fic5#w0F", "branders");  
  function fill_Manager($connect)  
  {  
       $output = '';  
