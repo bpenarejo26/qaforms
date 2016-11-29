@@ -10,11 +10,12 @@ if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
 //$id = $_GET['id'];
- $from = $_POST['from'];
- $to = $_POST['to'];
- $d1= $from.":00.000";
- $d2= $to.":59.997";
- 
+ $artist = $_GET['artist'];
+ $from = $_GET['from'];
+ $to = $_GET['to'];
+ $d1= $from.":00";
+ $d2= $to.":59";
+ //echo $artist;
 // $sart = $_POST['sart'];
  //echo $sart;
 /*$sql = "SELECT fullname as name from qualitycheck inner join employee on employee.EmpID = qualitycheck.Manager";
@@ -24,18 +25,34 @@ $result5 = mysqli_query($connect, $sql);
 $row5 = mysqli_fetch_array ($result5);
  //echo $row2['name'];
 */
- $sql = "SELECT `TransNo`, `ORNo`, `Source`, `Brand`, `Assoc`, `Manager`, `Checker`, `EvalDate`, `Accuracy`, `CustIns`, `OveRep`, `TexSiz`, `PosNeg`, `Size`, `Loca`, `Colo`, `ArtOrd`, `AdjArt`, `MocUp`, `ArtSiz`, `TemLay`, `OrdDet`, `ImpSiz`, `ArtBox`, `MocBox`, `UplFil`, `BacSli`, `Und`, `UplPro`, `AddNote`, `SVG`, `EDate`, `TransID`  FROM `qualitycheck`WHERE EvalDate BETWEEN '$d1' and '$d2' ";
+$sql = "SELECT `TransNo`, `ORNo`, `Source`, `Brand`, `Assoc`, `Manager`, `Checker`, `EvalDate`, `Accuracy`, `CustIns`, `OveRep`, `TexSiz`, `PosNeg`, `Size`, `Loca`, `Colo`, `ArtOrd`, `AdjArt`, `MocUp`, `ArtSiz`, `TemLay`, `OrdDet`, `ImpSiz`, `ArtBox`, `MocBox`, `UplFil`, `BacSli`, `Und`, `UplPro`, `AddNote`, `SVG`, `EDate`, `TransID`  FROM `qualitycheck`WHERE EvalDate BETWEEN '$d1' and '$d2' and Assoc = '$artist' ";
 $result2 = mysqli_query ($connect, $sql);
 $row = mysqli_fetch_array ($result2);
 //echo $row['ORNo'];
 //echo $row['Fullname'];
 $count = mysqli_num_rows($result2); 
 echo "Total". " ".$count;?>
-
+<?php echo "" ;?>
+<a href="sample1.php?d1=<?php echo $d1;?>&d2=<?php echo $d2;?>&artist=<?php echo $artist;?>">Convert to CSV file</a>
 
 <html>
 <head>
-<a href="sample.php?d1=<?php echo $d1;?>&d2=<?php echo $d2;?>">Convert to CSV file</a> <br>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+<ul>
+        <li><a href="qa.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=1>Home</a></li>
+       
+        <li>
+            <a href="#"tabindex=-1>Report &#9662;</a>
+            <ul class="dropdown">
+				<li><a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">Date</a></li>
+                
+                
+            </ul>
+			 <li><a href="newpw.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>
+			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
+			</ul>
+
 <form name ="convert" method = "POST" />
 </head>
 <style type="text/css">
@@ -147,6 +164,44 @@ tbody:hover tr:hover td {
 	color: #444;
 	text-shadow: 0 1px 0 #fff;
 }
+
+
+ ul{
+        padding: 0;
+        list-style: none;
+        background: #1375bc;
+    }
+    ul li{
+        display: inline-block;
+        position: relative;
+        line-height: 21px;
+        text-align: left;
+    }
+    ul li a{
+        display: block;
+        padding: 8px 25px;
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+    ul li a:hover{
+        color: #fff;
+        background: #939393;
+    }
+    ul li ul.dropdown{
+        min-width: 100%; /* Set width of the dropdown */
+        background: #1375bc;
+        display: none;
+        position: absolute;
+        z-index: 999;
+        left: 0;
+    }
+    ul li:hover ul.dropdown{
+        display: block;	/* Display the dropdown */
+    }
+    ul li ul.dropdown li{
+        display: block;
+    }
+
 </style>
 <body>
 
