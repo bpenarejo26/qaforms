@@ -83,8 +83,21 @@ body {
 </style>
 <?php
 include("connection.php");
+include("function.php");
 ob_start();
 session_start();
+$inactive = 3600;
+if( !isset($_SESSION['timeout']) )
+$_SESSION['timeout'] = time() + $inactive; 
+//echo time();
+$session_life = time() - $_SESSION['timeout'];
+
+if($session_life > $inactive)
+	
+{  session_destroy(); header("Location:login.php?timeout="."Your_idle_for_almost_1_hour");  }
+
+$_SESSION['timeout']=time();
+
 if($_SERVER["REQUEST_METHOD"] == "POST")	
 	
 // Create connection
