@@ -1,16 +1,16 @@
  <?php  
  //load_data.php  
- $connect = mysqli_connect("localhost", "root", "Fic5#w0F", "branders");  
+ $connect = mysqli_connect("localhost", "itsupport", "Fic5#w0F", "branders");  
  $output = '';  
  if(isset($_POST["manager_id"]))  
  {  
       if($_POST["manager_id"] != '')  
       {  
-           $sql = "SELECT Fullname from employee where PosCode = '4' and Manager = '".$_POST["manager_id"]."' order by Fullname ASC ";  
+           $sql = "SELECT Fullname, DMName from employee where PosCode = '4' and Team = '".$_POST["manager_id"]."' order by Fullname ASC ";  
       }  
       else  
       {  
-           $sql = "SELECT Fullname FROM employee";  
+           $sql = "SELECT DMName FROM employee";  
       }
 	
       $result = mysqli_query($connect, $sql); 
@@ -20,7 +20,7 @@
       while($row = mysqli_fetch_array($result))  
       {  
           
-			$output .= '<option value="'.$row["Fullname"].'">'.$row[0].'</option>';
+			$output .= '<option value="'.$row["Fullname"].'">'.$row[1].'</option>';
 			
 	  }  
 	  
