@@ -2,7 +2,8 @@
 include("connection.php");
 session_start();
 if($_SERVER["REQUEST_METHOD"] == "POST")	
-	
+$id = $_GET['id'];
+$auto = $_GET['auto'];
 // Create connection
 $connect = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
@@ -29,7 +30,7 @@ $row = mysqli_fetch_array ($result2);
 
 $count = mysqli_num_rows($result2); 
 echo "Total". " ".$count;?>
-<?php echo "" ;?>
+
 <a href="sample.php?d1=<?php echo $d1;?>&d2=<?php echo $d2;?>&manager=<?php echo $manager;?>">Convert to CSV file</a> 
 
 <html>
@@ -38,10 +39,11 @@ echo "Total". " ".$count;?>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
 <ul>
-        <li><a href="qa.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=1>Home</a></li>
+        <li><a href="qa.php?id=<?php echo $_GET['id'];?>&x=<?php echo $auto;?>"tabindex=1>Home</a></li>
        
-      <li> <a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Report </a></li>
-			 <li><a href="newpw.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>
+      <li> <a href="dater_all.php?id=<?php echo $_GET['id'];?>"&x="<?php echo $auto;?>"tabindex=-1>Report </a></li>
+	  
+			 <li><a href="newpw.php?id=<?php echo $_GET['id'];?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>
 			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
 			</ul>
 
