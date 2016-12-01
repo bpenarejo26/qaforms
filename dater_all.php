@@ -5,25 +5,29 @@ session_start();
 $id = $_GET['id'];
 $auto = $_GET['x'];
 //echo $auto;
+
+//Select Team from employee GROUP by Team order by Team ASC
+
+
 if($id == NULL || $auto == NULL) { header("Location:login.php"); }
 if($_SERVER["REQUEST_METHOD"] == "POST")	
 	
-$connect = mysqli_connect("localhost", "root", "Fic5#w0F", "branders");  
+$connect = mysqli_connect("localhost", "root", "", "branders");  
  function fill_Manager($connect)  
  {  
       $output = '';  
-      $sql = "select Manager from employee group by Manager order by Manager ASC";  
+      $sql = "Select Team from employee GROUP by Team order by Team ASC";  
       $result = mysqli_query($connect, $sql);  
       while($row = mysqli_fetch_array($result))  
       {  
-           $output .= '<option value="'.$row[Manager].'">'.$row[Manager].'</option>';  
+           $output .= '<option value="'.$row[Team].'">'.$row[Team].'</option>';  
       }  
       return $output;  
  }  
  function fill_Artist($connect)  
  {  
       $output = '';  
-      $sql = "SELECT Fullname from employee where PosCode = '4' and Manager != NULL order by Fullname ASC";  
+      $sql = "SELECT Fullname from employee where PosCode = '4' and Team != NULL order by Fullname ASC";  
       $result = mysqli_query($connect, $sql);  
       while($row = mysqli_fetch_array($result))  
       {  
@@ -151,13 +155,7 @@ table {
 <ul>
         <li><a href="qa.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=1>Home</a></li>
        
-        <li>
-            <a href="#"tabindex=-1>Report &#9662;</a>
-            <ul class="dropdown">
-				<li><a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">Date</a></li>
-                
-                
-            </ul>
+        <li> <a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Report </a></li>
 			 <li><a href="newpw.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>
 			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
 			</ul>
