@@ -54,8 +54,9 @@ if (isset($_POST['search']) && $_POST['show_artist'] == 28) {
 	$manager = $_POST['manager'];
 	$to = $_POST['to'];
 	$from = $_POST['from'];
-	
-	header("Location:http:report.php?from=".$from."&to=".$to."&manager=".$manager);
+	$id = $_GET['id'];
+	$auto = $_GET['x'];
+	header("Location:http:report.php?from=".$from."&to=".$to."&manager=".$manager."&id=".$id."&auto=".$auto);
 }
 	if (isset($_POST['search']) && ($_POST['manager'] != 28) && $_POST['show_artist'] != 28){
 		
@@ -65,8 +66,9 @@ if (isset($_POST['search']) && $_POST['show_artist'] == 28) {
 	$from = $_POST['from'];
 	
 	$show_artist = $_POST['show_artist'];
-	
-	header("Location:http:report_all.php?from=".$from."&to=".$to."&artist=".$artist);
+	$id = $_GET['id'];
+	$auto = $_GET['x'];	
+	header("Location:http:report_all.php?from=".$from."&to=".$to."&artist=".$artist."&id=".$id."&auto=".$auto);
 }
 	
 ?>
