@@ -86,7 +86,7 @@ include("connection.php");
 include("function.php");
 ob_start();
 session_start();
-$inactive = 3600;
+$inactive = 3540;
 if( !isset($_SESSION['timeout']) )
 $_SESSION['timeout'] = time() + $inactive; 
 //echo time();
@@ -139,13 +139,9 @@ if(isset($_POST['out'])){
 <ul>
         <li><a href="#"tabindex=-1>Home</a></li>
        
-        <li>
-            <a href="#"tabindex=-1>Report &#9662;</a>
-            <ul class="dropdown">
-				<li><a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>">Date</a></li>
-                
-                
-            </ul>
+        
+           <li> <a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Report </a></li>
+            
 			 <li><a href="newpw.php?id=<?php echo $id;?>"tabindex=-1>Change password</a></li>
 			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
 			</ul>
@@ -177,7 +173,15 @@ if(isset($_POST['out'])){
 				 }
 					echo "</select>"; ?></td>
       <td><input type = "submit" name = "next3" value = "+" tabindex=-1 />
-	  <?php if(isset($_POST['next3'] )) { $id = "4"; header("Location:register.php?id=".$id); } ?></td>
+	  <?php if(isset($_POST['next3'] )) { //echo $_GET['id'];
+			$select_add = "SELECT Allow from employee WHERE EmpID  = '$_GET[id]'";
+			$result_add = mysqli_query($connect, $select_add);
+			$row_add = mysqli_fetch_array($result_add);
+			if($row_add['Allow'] == 1) {
+
+	  $id = "4"; header("Location:register.php?id=".$id); }
+		
+	  } ?></td>
       <td><strong>Quality Checker</strong></td>
       <td><input type = "text" name = "QC" style="border:none" value ="<?php echo $row3['Fullname'];?>" readonly tabindex=-1/td>
     </tr>
@@ -573,7 +577,7 @@ if(isset($_POST['out'])){
     </tr>
   </tbody>
 </table>
-<?php $id2 = $_GET['id'];?>
+<?php $id2 = $_GET['id'] ;?>
 
 <p>
 
@@ -582,6 +586,13 @@ if(isset($_POST['out'])){
 <?php 
 if(isset($_POST['submit']))
 	{
+		
+		$search_team = "select Team from employee where EmpID = '$id2'";
+		$search_result = mysqli_query ($connect,$search_team);
+		$search_row = mysqli_fetch_array ($search_result);
+		//echo $search_row['Team'];
+	
+$Team = $search_team['Team']; 		
 $EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
 $date = date('Y-m-d H:i:s',$EasternTimeStamp );
 $OR = $_POST['OR'];
@@ -625,15 +636,16 @@ if (!empty($OR) && ($CI != 1) && ($OV != 1) && ($TS != 1) && ($PN != 1) && ($SI 
 //insert to database
 $sql = "INSERT INTO `qualitycheck` (`TransNo`, `ORNo`, `Assoc`, `Manager`, `Checker`, `EvalDate`, `Accuracy`, `CustIns`, `OveRep`, `TexSiz`,
  `PosNeg`, `Size`, `Loca`, `Colo`, `ArtOrd`, `AdjArt`, `MocUp`, `ArtSiz`, `TemLay`, `OrdDet`, `ImpSiz`, `ArtBox`, `MocBox`, `UplFil`, `BacSli`, `Und`, 
- `UplPro`, `AddNote`, `SVG`, `TransID` ) VALUES
+ `UplPro`, `AddNote`, `SVG`, `TransID`, `Team` ) VALUES
 (NULL, '$OR', '$AS', '$TM', '$QC', '$DE', '$R1', '$CI', '$OV', '$TS', '$PN', '$SI', '$LO', '$CD',
- '$AO', '$AA', '$MU','$AR', '$TL', '$OD' ,'$IS', '$AB' , '$MB','$UF', '$BS', '$UD', '$UP', '$AD', '$SV','$EID')";
+ '$AO', '$AA', '$MU','$AR', '$TL', '$OD' ,'$IS', '$AB' , '$MB','$UF', '$BS', '$UD', '$UP', '$AD', '$SV','$EID', '$Team')";
  
 $query  = mysqli_query($connect,$sql);
 echo("<meta http-equiv='refresh' content='1'>"); 
  
  } else { 
 echo "<script type='text/javascript'>alert('Error : Please fill-up all required field!')</script>";
+
 }
 	}
 ?>
