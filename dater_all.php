@@ -12,7 +12,7 @@ $auto = $_GET['x'];
 if($id == NULL || $auto == NULL) { header("Location:login.php"); }
 if($_SERVER["REQUEST_METHOD"] == "POST")	
 	
-$connect = mysqli_connect("localhost", "root", "", "branders");  
+$connect = mysqli_connect("localhost", "itsupport", "Fic5#w0F", "branders");  
  function fill_Manager($connect)  
  {  
       $output = '';  
@@ -41,7 +41,7 @@ $connect = mysqli_connect("localhost", "root", "", "branders");
  }
  
  if(isset($_POST['out'])){
-	$EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
+	$EasternTimeStamp =mktime(date('H')-5,date('i'),date('s'),date("m"),date("d"),date("Y"));
 	$udate = date('Y-m-d H:i:s',$EasternTimeStamp );
 	$update = "update logbook set `Time-out` = '$udate' where Ref like '%$auto%' ";
 	$result = mysqli_query($connect, $update);
@@ -52,8 +52,8 @@ $connect = mysqli_connect("localhost", "root", "", "branders");
 
 if (isset($_POST['search']) && $_POST['show_artist'] == 28) {
 	$manager = $_POST['manager'];
-	$to = $_POST['to'];
-	$from = $_POST['from'];
+	$to = $_POST['to'].":23:59:59";
+	$from = $_POST['from'].":00:00:00";
 	$id = $_GET['id'];
 	$auto = $_GET['x'];
 	header("Location:http:report.php?from=".$from."&to=".$to."&manager=".$manager."&id=".$id."&auto=".$auto);
@@ -62,8 +62,8 @@ if (isset($_POST['search']) && $_POST['show_artist'] == 28) {
 		
 	 
 	$artist = $_POST['show_artist'];
-	$to = $_POST['to'];
-	$from = $_POST['from'];
+	$to = $_POST['to'].":23:59:59";
+	$from = $_POST['from'].":00:00:00";
 	
 	$show_artist = $_POST['show_artist'];
 	$id = $_GET['id'];
@@ -186,11 +186,11 @@ table {
 		   </tr>
 	<tr>
       <th width="30%" scope="row">Date From:</th>
-      <td><input type="text" value="" id="datetimepicker" name ="from"/></td>
+      <td><input type="date" value="" id="datetimepicker" name ="from"/></td>
     </tr>
 	<tr>
       <th width="30%" scope="row">Date To:</th>
-      <td><input type="text" value="" id="datetimepicker2" name ="to"/></td>
+      <td><input type="date" value="" id="datetimepicker2" name ="to"/></td>
     </tr>
     <tr>
       <th scope="row">&nbsp;</th> 
@@ -203,8 +203,6 @@ table {
 
 </table>
 
-<script src="./jquery.js"></script>
-<script src="build/jquery.datetimepicker.full.js"></script>
 <script>/*
 window.onerror = function(errorMsg) {
 	$('#console').html($('#console').html()+'<br>'+errorMsg)
@@ -226,37 +224,6 @@ window.onerror = function(errorMsg) {
       });  
  });  
  
-  
-$.datetimepicker.setLocale('en');
-
-$('#datetimepicker_format').datetimepicker({value:'2015/04/15 05:03', format: $("#datetimepicker_format_value").val()});
-console.log($('#datetimepicker_format').datetimepicker('getValue'));
-
-$("#datetimepicker_format_change").on("click", function(e){
-	$("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({format: $("#datetimepicker_format_value").val()});
-});
-$("#datetimepicker_format_locale").on("change", function(e){
-	$.datetimepicker.setLocale($(e.currentTarget).val());
-});
-
-$('#datetimepicker').datetimepicker({
-dayOfWeekStart : 1,
-lang:'en',
-disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
-startDate:	'2016/01/01'
-});
-$('#datetimepicker').datetimepicker({value:'',step:10});
-$('.some_class').datetimepicker();
-
-
-$('#datetimepicker2').datetimepicker({
-dayOfWeekStart : 1,
-lang:'en',
-disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
-startDate:	'2016/12/31'
-});
-$('#datetimepicker2').datetimepicker({value:'',step:10});
-$('.some_class').datetimepicker();
 </script>
 </form>
 </html>
