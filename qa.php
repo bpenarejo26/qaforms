@@ -165,7 +165,7 @@ if(isset($_POST['out'])){
 			if (mysqli_num_rows($result4) > 0) {
 		
 				while($row4 = mysqli_fetch_assoc($result4)) {
-					echo "<option value='".$row4[name3]."'>$row4[DMName]</option>"; 
+					echo "<option value='".$row4[DMName]."'>$row4[DMName]</option>"; 
 														  }
 											  } 
 		    else {
@@ -577,7 +577,7 @@ if(isset($_POST['out'])){
     </tr>
   </tbody>
 </table>
-<?php $id2 = $_GET['id'] ;?>
+<?php $id2 = $_GET['id'] ; ?>
 
 <p>
 
@@ -586,17 +586,18 @@ if(isset($_POST['out'])){
 <?php 
 if(isset($_POST['submit']))
 	{
-		
-		$search_team = "select Team from employee where EmpID = '$id2'";
+		$AS = $_POST['AS'];
+		$search_team = "select Team from employee where Fullname = '$AS'";
 		$search_result = mysqli_query ($connect,$search_team);
 		$search_row = mysqli_fetch_array ($search_result);
 		//echo $search_row['Team'];
 	
-$Team = $search_team['Team']; 		
+$Team = $search_row['Team']; 
+echo $Team;		
 $EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
 $date = date('Y-m-d H:i:s',$EasternTimeStamp );
 $OR = $_POST['OR'];
-$AS = $_POST['AS'];
+
 $TM = $_POST['TM'];
 $QC = $_POST['QC'];
 $DE = $date;
