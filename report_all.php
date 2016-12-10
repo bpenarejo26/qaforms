@@ -14,8 +14,8 @@ if (!$connect) {
  $artist = $_GET['artist'];
  $from = $_GET['from'];
  $to = $_GET['to'];
- $d1= $from.":00";
- $d2= $to.":59";
+ $d1= $from;
+ $d2= $to;
  //echo $artist;
 // $sart = $_POST['sart'];
  //echo $sart;
