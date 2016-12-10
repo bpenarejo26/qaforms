@@ -65,7 +65,7 @@ ul{
 			 <li><a href="newpw.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>
 			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
 			</ul>
-<?php $id = $_GET['id']; //echo $id;?>
+<?php $id = $_GET['id']; $auto = $_GET['x'];//echo $id;?>
 <body>
 <table width="30%" border="0">
   <tbody>
@@ -132,9 +132,9 @@ else
 
 }
 if(isset($_POST['out'])){
-	$EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
+	$EasternTimeStamp =mktime(date('H')-5,date('i'),date('s'),date("m"),date("d"),date("Y"));
 	$udate = date('Y-m-d H:i:s',$EasternTimeStamp );
-	$update = "update logbook set `Time-out` = '$udate' where Ref like '%$auto%' ";
+	$update = "update logbook set `Time-out` = '$udate' where Ref like '$auto%' and ID = '$id' ";
 	$result = mysqli_query($connect, $update);
 	session_destroy();	
 	header("Location:login.php");
