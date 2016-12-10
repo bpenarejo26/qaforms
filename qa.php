@@ -142,7 +142,7 @@ if(isset($_POST['out'])){
         
            <li> <a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Report </a></li>
             
-			 <li><a href="newpw.php?id=<?php echo $id;?>"tabindex=-1>Change password</a></li>
+			 <li><a href="newpw.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>
 			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
 			</ul>
 <table width="100%" border="0">
@@ -587,13 +587,13 @@ if(isset($_POST['out'])){
 if(isset($_POST['submit']))
 	{
 		$AS = $_POST['AS'];
-		$search_team = "select Team from employee where Fullname = '$AS'";
+		$search_team = "select Team from employee where DMName = '$AS'";
 		$search_result = mysqli_query ($connect,$search_team);
 		$search_row = mysqli_fetch_array ($search_result);
 		//echo $search_row['Team'];
 	
 $Team = $search_row['Team']; 
-echo $Team;		
+//echo $Team;		
 $EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
 $date = date('Y-m-d H:i:s',$EasternTimeStamp );
 $OR = $_POST['OR'];
