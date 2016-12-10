@@ -122,13 +122,12 @@ $result4 = mysqli_query($connect, $sql);
 //echo $id;
 
 if(isset($_POST['out'])){
-	$EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
+		$EasternTimeStamp =mktime(date('H')-5,date('i'),date('s'),date("m"),date("d"),date("Y"));
 	$udate = date('Y-m-d H:i:s',$EasternTimeStamp );
-	$update = "update logbook set `Time-out` = '$udate' where Ref like '%$auto%' ";
+	$update = "update logbook set `Time-out` = '$udate' where Ref like '$auto%' and ID = '$id' ";
 	$result = mysqli_query($connect, $update);
 	session_destroy();	
-	header("Location:login.php");
-	}
+	header("Location:login.php");}
 	
 ?>
 
@@ -155,7 +154,7 @@ if(isset($_POST['out'])){
     
 	  <td><input type = "text" style="border:none" name = "TM" value ="<?php echo $row3['Manager'];?>" readonly tabindex=-1/td>
     <td>Date/Time</td>
-	  <?php $EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));$date = date('Y-m-d H:i:s',$EasternTimeStamp );?>
+	  <?php $EasternTimeStamp =mktime(date('H')-5,date('i'),date('s'),date("m"),date("d"),date("Y"));$date = date('Y-m-d H:i:s',$EasternTimeStamp );?>
       <td><input type = "text" style="border:none" size = "32" name = "DE"  tabindex=-1 value = "<?php echo $date;?>" readonly  /></td>	
 	</tr>
     <tr>
@@ -594,7 +593,7 @@ if(isset($_POST['submit']))
 	
 $Team = $search_row['Team']; 
 //echo $Team;		
-$EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
+$EasternTimeStamp =mktime(date('H')-5,date('i'),date('s'),date("m"),date("d"),date("Y"));
 $date = date('Y-m-d H:i:s',$EasternTimeStamp );
 $OR = $_POST['OR'];
 
