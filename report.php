@@ -13,8 +13,8 @@ if (!$connect) {
 //$id = $_GET['id'];
  $from = $_GET['from'];
  $to = $_GET['to'];
- $d1= $from.":00";
- $d2= $to.":59";
+ $d1= $from;
+ $d2= $to;
  $manager = $_GET['manager'];
  //echo $sart;
 /*$sql = "SELECT fullname as name from qualitycheck inner join employee on employee.EmpID = qualitycheck.Manager";
@@ -43,7 +43,7 @@ echo "Total". " ".$count;?>
        
       <li> <a href="dater_all.php?id=<?php echo $_GET['id'];?>"&x="<?php echo $auto;?>"tabindex=-1>Report </a></li>
 	  
-			 <li><a href="newpw.php?id=<?php echo $_GET['id'];?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>
+			 <li><a href="newpw.php?id=<?php echo $_GET['id'];?>"&x="<?php echo $auto;?>"tabindex=-1>Change password</a></li>
 			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
 			</ul>
 
