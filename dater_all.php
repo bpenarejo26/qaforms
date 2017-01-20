@@ -12,7 +12,7 @@ $auto = $_GET['x'];
 if($id == NULL || $auto == NULL) { header("Location:login.php"); }
 if($_SERVER["REQUEST_METHOD"] == "POST")	
 	
-$connect = mysqli_connect("localhost", "itsupport", "Fic5#w0F", "branders");  
+$connect = mysqli_connect("localhost", "root", "", "branders");  
  function fill_Manager($connect)  
  {  
       $output = '';  
@@ -155,7 +155,7 @@ table {
 <body>
 <table width="50%" border="0">
 <ul>
-        <li><a href="qa.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=1>Home</a></li>
+        <li><a href="qc.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=1>Home</a></li>
        
         <li> <a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Report </a></li>
 			 <li><a href="newpw.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>

@@ -16,15 +16,8 @@ if (!$connect) {
  $d1= $from;
  $d2= $to;
  $manager = $_GET['manager'];
- //echo $sart;
-/*$sql = "SELECT fullname as name from qualitycheck inner join employee on employee.EmpID = qualitycheck.Manager";
-$result = mysqli_query($connect, $sql);
-$sql = "SELECT poscode FROM employee where EmpID = '$id';";
-$result5 = mysqli_query($connect, $sql);
-$row5 = mysqli_fetch_array ($result5);
- //echo $row2['name'];
-*/
-$sql = "SELECT `TransNo`, `ORNo`, `Source`, `Brand`, `Assoc`, `Manager`, `Checker`, `EvalDate`, `Accuracy`, `CustIns`, `OveRep`, `TexSiz`, `PosNeg`, `Size`, `Loca`, `Colo`, `ArtOrd`, `AdjArt`, `MocUp`, `ArtSiz`, `TemLay`, `OrdDet`, `ImpSiz`, `ArtBox`, `MocBox`, `UplFil`, `BacSli`, `Und`, `UplPro`, `AddNote`, `SVG`, `EDate`, `TransID`  FROM `qualitycheck`WHERE EvalDate BETWEEN '$d1' and '$d2' and Team = '$manager'";
+//echo $manager;
+$sql = "SELECT `TransNo`, `Order_Number`, `Imprint_Method`, `Associate`, `Checker`, `Date`, `Accuracy`, `R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`, `I1`, `I2`, `I3`, `I4`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `A7`, `A8`, `A9`, `F1`, `F2`, `F3`, `F4`, `F5`, `F6`, `F7`, `F8`, `P1`, `P2`, `P3`, `P4`, `P5`, `P6`, `P7`, `U1`, `U2`, `U3`, `U4`, `U5`, `PO1`, `PO2`, `Notes` FROM `qc` WHERE Date BETWEEN '$d1' and '$d2' and Team = '$manager'";
 $result2 = mysqli_query ($connect, $sql);
 $row = mysqli_fetch_array ($result2);
 
@@ -39,11 +32,11 @@ echo "Total". " ".$count;?>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
 <ul>
-        <li><a href="qa.php?id=<?php echo $_GET['id'];?>&x=<?php echo $auto;?>"tabindex=1>Home</a></li>
+        <li><a href="qc.php?id=<?php echo $_GET['id'];?>&x=<?php echo $auto;?>"tabindex=1>Home</a></li>
        
-      <li> <a href="dater_all.php?id=<?php echo $_GET['id'];?>"&x="<?php echo $auto;?>"tabindex=-1>Report </a></li>
+      <li> <a href="dater_all.php?id=<?php echo $_GET['id'];?>&x=<?php echo $auto;?>"tabindex=-1>Report </a></li>
 	  
-			 <li><a href="newpw.php?id=<?php echo $_GET['id'];?>"&x="<?php echo $auto;?>"tabindex=-1>Change password</a></li>
+			 <li><a href="newpw.php?id=<?php echo $_GET['id'];?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>
 			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
 			</ul>
 
@@ -206,27 +199,17 @@ tbody:hover tr:hover td {
       <th> <b> Quality Checker</th>
 	  <th> <b> Evaluation Date</th>
 	  <th> <b>Accuracy</th>
-	  <th> <b> Customer Instruction</th>
-	  <th> <b> ART Standard</th>
-	  <th> <b> Mock Up</th>
-	  <th> <b> FILM</th>
-	  <th> <b> PROOF</th>
-	  <th> <b> REMARKS</th>
+	  <th> <b> NOTES</th>
      
 	  </tr>
 	  <?php  do { ;?>
 <tr>	
- <td align="Left"><?php echo $row['ORNo']; ?></td>
-  <td align="Left"><?php echo $row['Assoc']; ?></td>
+ <td align="Left"><?php echo $row['Order_Number']; ?></td>
+  <td align="Left"><?php echo $row['Associate']; ?></td>
    <td align="Left"><?php echo $row['Checker']; ?></td>
-    <td align="Left"><?php echo $row['EvalDate']; ?></td>
+    <td align="Left"><?php echo $row['Date']; ?></td>
 	 <td align="Left"><?php echo $row['Accuracy']; ?></td>
-	  <td align="Left"><?php echo $row['CustIns']; ?></td>
-	   <td align="Left"><?php echo $row['OveRep']; ?></td>
-	    <td align="Left"><?php echo $row['PosNeg']; ?></td>
-  <td align="Left"><?php echo $row['Size'];  ?></td>
-   <td align="Left"><?php echo $row['Loca'];  ?></td>
-    <td align="Left"><?php echo $row['AddNote'];  ?></td>
+    <td align="Left"><?php echo $row['Notes'];  ?></td>
 	
 	
 	</tr>

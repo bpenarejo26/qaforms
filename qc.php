@@ -3,10 +3,15 @@ include("connection.php");
 include("function.php");
 ob_start();
 session_start();
+// the user can't go direct to this form.
+$id = $_GET['id'];
+$auto = $_GET['x'];
+if ($id == NULL) { header("Location:http:login.php");}	
 $inactive = 3600;
 if( !isset($_SESSION['timeout']) )
 $_SESSION['timeout'] = time() + $inactive; 
-//echo time();
+
+//The user auto sign-out when idle for 1hr
 $session_life = time() - $_SESSION['timeout'];
 
 if($session_life > $inactive)
@@ -15,25 +20,36 @@ if($session_life > $inactive)
 
 $_SESSION['timeout']=time();
 
-if($_SERVER["REQUEST_METHOD"] == "POST")	
+if($_SERVER["REQUEST_METHOD"] == "POST")
+
 $connect = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
 if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
 //select username from DM admin panel
-$query_assoc = "SELECT DMName from employee where PosCode = '4'";
+$query_assoc = "SELECT DMName from employee where PosCode = '4' Order by DMName ASC" ;
 $result_assoc = mysqli_query($connect, $query_assoc);
 $row_assoc = mysqli_fetch_array($result_assoc);	
 
+$query_user = "SELECT Fullname, Manager from employee where EmpID = '$id';";
+$result_user = mysqli_query($connect, $query_user);
+$row_user = mysqli_fetch_array($result_user);
+
 //select imprint method 1/14/17
-$query_method = "SELECT * FROM imprintmethod";
+$query_method = "SELECT * FROM imprintmethod Order by Method ASC";
 $result_method = mysqli_query($connect, $query_method);
 $row_method = mysqli_fetch_array($result_method);
+
+if(isset($_POST['out'])){
+		$EasternTimeStamp =mktime(date('H')-5,date('i'),date('s'),date("m"),date("d"),date("Y"));
+	$udate = date('Y-m-d H:i:s',$EasternTimeStamp );
+	$update = "update logbook set `Time-out` = '$udate' where Ref like '$auto%' and ID = '$id' ";
+	$result = mysqli_query($connect, $update);
+	session_destroy();	
+	header("Location:login.php");}
+
 ?>
-
-
-
 <!doctype html>
 <html>
 <style>
@@ -84,6 +100,7 @@ html {
 
 </style>
 <head>
+<img  class = "center fit" src="1-01.jpg" > 
 <meta charset="utf-8">
 <title>Belmanila QC Form</title>
 <form name ="survey" method = "POST" action = "#" >
@@ -105,6 +122,7 @@ html {
       <td>&nbsp;</td>
       <td><strong>Imprint Method:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <?php echo "<select name = 'Method' >";
+	  echo "<option value='".N/A."'>-</option>";
 	  if (mysqli_num_rows($result_method) > 0) {
 			while($row_method = mysqli_fetch_assoc($result_method)) {
 			echo "<option value='".$row_method[Method]."'>$row_method[Method]</option>"; 
@@ -121,6 +139,7 @@ html {
     <tr>
       <td><strong>Associate:</strong></td>
       <td colspan="2"><?php echo "<select name = 'Assoc' >";
+	   echo "<option value='".N/A."'>-</option>";
 	  if (mysqli_num_rows($result_assoc) > 0) {
 			while($row_assoc = mysqli_fetch_assoc($result_assoc)) {
 			echo "<option value='".$row_assoc[DMName]."'>$row_assoc[DMName]</option>"; 
@@ -133,7 +152,7 @@ html {
 	  </td>
     
       <td><strong>Quality Checker :&nbsp; &nbsp;
-        <input type="text" name="Checker"/> </strong></td>
+        <input type="text" name="Checker"style="border:none" value ="<?php echo $row_user['Fullname'];?>" readonly tabindex=-1/> </strong></td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
 	  <td>&nbsp;</td>
@@ -685,14 +704,21 @@ html {
     </tr>
   </tbody>
 </table>
+<p>
 
+<img id="the_pic" class="center fit" src="1-02.jpg" > </p>
 </body>
 </form>
 </html>
 <?php
 if(isset($_POST['submit'])) {
+	
+	$AS = $_POST['Assoc'];
+		$search_team = "select Team from employee where DMName = '$AS'";
+		$search_result = mysqli_query ($connect,$search_team);
+		$search_row = mysqli_fetch_array ($search_result);
+$TE = $search_row['Team'];		
 $OR = $_POST['Order'];
-$AS = $_POST['Assoc'];
 $IM = $_POST['Method'];
 $QC = $_POST['Checker'];	
 	//Rotation
@@ -745,7 +771,7 @@ $u5 = $_POST['MSF'];
 $po1 = $_POST['ORTCB'];
 $po2 = $_POST['PMU'];
 $notes = $_POST['Notes'];
-if(!empty($_POST['Order'])) {
+if(!empty($_POST['Order'])) { // if theres a DM refrence it continue to save transaction.
 if(($r1 == "Y") && ($r2 == "Y")&& ($r3 == "Y") && ($r4 == "Y")&& ($r5 == "Y")&& ($r6 == "Y")&& ($r7 == "Y")
 && ($i1 == "Y")&& ($i2 == "Y")&& ($i3 == "Y")&& ($i4 == "Y")
 && ($a1 == "Y")&& ($a2 == "Y")&& ($a3 == "Y")&& ($a4 == "Y")&& ($a5 == "Y")&& ($a6 == "Y")&& ($a7 == "Y")&& ($a8 == "Y")&& ($a9 == "Y")
@@ -761,13 +787,14 @@ else
 {
 	$Acc = "NO";
 }
-$insert = "INSERT INTO  qc VALUES(NULL, '$OR', '$AS', '$IM', '$QC', '$udate', '$Acc', '$r1', '$r2', '$r3', '$r4', '$r5', '$r6', '$r7', '$i1', '$i2', '$i3', '$i4', '$a1', '$a2', '$a3', '$a4', '$a5', '$a6', '$a7', '$a8', '$a9', '$f1', '$f2', '$f3', '$f4', '$f5', '$f6', '$f7', '$f8', '$p1', '$p2', '$p3', '$p4', '$p5', '$p6', '$p7', '$u1', '$u2', '$u3', '$u4', '$u5', '$po1', '$po2', '$notes')";
+$insert = "INSERT INTO  qc VALUES(NULL, '$OR', '$IM', '$AS', '$QC', '$TE', '$udate', '$Acc', '$r1', '$r2', '$r3', '$r4', '$r5', '$r6', '$r7', '$i1', '$i2', '$i3', '$i4', '$a1', '$a2', '$a3', '$a4', '$a5', '$a6', '$a7', '$a8', '$a9', '$f1', '$f2', '$f3', '$f4', '$f5', '$f6', '$f7', '$f8', '$p1', '$p2', '$p3', '$p4', '$p5', '$p6', '$p7', '$u1', '$u2', '$u3', '$u4', '$u5', '$po1', '$po2', '$notes')";
 $insert_query = mysqli_query($connect, $insert);
 echo("<meta http-equiv='refresh' content='1'>"); 
 echo "<script type='text/javascript'>alert('".$OR." : Sucessfully saved!')</script>"; 
 
 }
 else { 
+//if there's no DM refrence It can't save the data
 echo "<script type='text/javascript'>alert('Error : Please fill-up all required field!')</script>";
 
 }

@@ -87,7 +87,7 @@ if(($row['Level'] == 1) && ($row['Disable'] == TRUE)){
 							{
 								$auto = generate();
 								if($row['Disable'] == TRUE) {
-								$id = $row['EmpID'];  $id2 = $row['Manager']; header("Location:http:qa.php?id=".$id."&x=".$auto);
+								$id = $row['EmpID'];  $id2 = $row['Manager']; header("Location:http:qc.php?id=".$id."&x=".$auto);
 								//echo generate();
 
 $insert = "INSERT INTO logbook (`TransNo`, `ID`, `Time-in`, `Ref`, `Time-out`) VALUES ('', '$id', '$date', '$auto', '0000-00-00 00:00:00.000000')";

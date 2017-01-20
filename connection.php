@@ -1,7 +1,7 @@
 <?php 
 $servername = "localhost";
-$username = "itsupport";
-$password = "Fic5#w0F";
+$username = "root";
+$password = "";
 $dbname = "branders";
 
 // Create connection

@@ -1,6 +1,6 @@
  <?php  
  //load_data.php  
- $connect = mysqli_connect("localhost", "itsupport", "Fic5#w0F", "branders");  
+ $connect = mysqli_connect("localhost", "root", "", "branders");  
  $output = '';  
  if(isset($_POST["manager_id"]))  
  {  
