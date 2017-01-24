@@ -26,7 +26,7 @@ $result5 = mysqli_query($connect, $sql);
 $row5 = mysqli_fetch_array ($result5);
  //echo $row2['name'];
 */
-$sql = "SELECT `TransNo`, `Order_Number`, `Imprint_Method`, `Associate`, `Checker`, `Date`, `Accuracy`, `R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`, `I1`, `I2`, `I3`, `I4`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `A7`, `A8`, `A9`, `F1`, `F2`, `F3`, `F4`, `F5`, `F6`, `F7`, `F8`, `P1`, `P2`, `P3`, `P4`, `P5`, `P6`, `P7`, `U1`, `U2`, `U3`, `U4`, `U5`, `PO1`, `PO2`, `Notes` FROM `qc` WHERE Date BETWEEN '$d1' and '$d2' and Assoc = '$artist' ";
+$sql = "SELECT `TransNo`, `Order_Number`, `Imprint_Method`, `Associate`, `Checker`, `Date`, `Accuracy`, `R1`,`I1`, `I2`, `I3`, `I4`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `A7`, `A8`, `A9`, `F1`, `F2`, `F3`, `F4`, `F5`, `F6`, `F7`, `F8`, `P1`, `P2`, `P3`, `P4`, `P5`, `P6`, `P7`, `U1`, `U2`, `U3`, `U4`, `U5`, `PO1`, `PO2`, `Notes` FROM `qc` WHERE Date BETWEEN '$d1' and '$d2' and Assoc = '$artist' ";
 $result2 = mysqli_query ($connect, $sql);
 $row = mysqli_fetch_array ($result2);
 //echo $row['ORNo'];
