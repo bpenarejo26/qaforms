@@ -171,84 +171,26 @@ html {
       <td width="3%">&nbsp;</td>
       <td width="4%" align="left" bgcolor="#C9E2F6" ><strong>1.0</strong></td>
       <td colspan="5" align="left" bgcolor="#C9E2F6"><strong>ROTATION</strong></td>
-    </tr>
+    
+	</tr>
     <tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td width="8%">1.1</td>
-      <td colspan="2">Back Office</td>
+      <td colspan="2"></td>
       <td width="8%"><select name="BO">
-   		<option value="Y"></option>
-		<option value="N">N</option>
+   		<option value="Back Office">Back Office</option>
+		<option value="Production Manager Verification">Production Manager Verification</option>
+		<option value="Order Modification Required">Order Modification Required</option>
+		<option value="Art Issues">Art Issues</option>
+		<option value="Sales Issues">Sales Issues</option>
+		<option value="Greek Letters">Greek Letters</option>
+		<option value="No Artwork">No Artwork</option>	
+		
 	</select></td>
       <td width="14%">&nbsp;</td>
     </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>1.2</td>
-      <td colspan="2">Production Manager Verification</td>
-      <td><select name="PMV">
-   		<option value="Y"></option>
-		<option value="N">N</option>
-	</select></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>1.3</td>
-      <td colspan="2">Order Modification Required</td>
-      <td><select name="OMR">
-   		<option value="Y"></option>
-		<option value="N">N</option>
-	</select></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>1.4</td>
-      <td colspan="2">Art Issues</td>
-      <td><select name="AI">
-   		<option value="Y"></option>
-		<option value="N">N</option>
-	</select></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>1.5</td>
-      <td colspan="2">Sales Issues</td>
-      <td><select name="SI">
-   		<option value="Y"></option>
-		<option value="N">N</option>
-	</select></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>1.6</td>
-      <td colspan="2">Greek Letters</td>
-      <td><select name="GL">
-   		<option value="Y"></option>
-		<option value="N">N</option>
-	</select></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>1.7</td>
-      <td colspan="2">No Artwork</td>
-      <td><select name="NA">
-   		<option value="Y"></option>
-		<option value="N">N</option>
-	</select></td>
-      <td>&nbsp;</td>
-    </tr>
+    
     <tr>
       <td colspan="7"align="left" bgcolor="#1375bc"><font color="white"><strong>ARTWORK</strong></td>
     </tr>
@@ -723,12 +665,7 @@ $IM = $_POST['Method'];
 $QC = $_POST['Checker'];	
 	//Rotation
 $r1 = $_POST['BO'];
-$r2 = $_POST['PMV'];
-$r3 = $_POST['OMR'];
-$r4 = $_POST['AS'];
-$r5 = $_POST['SI'];
-$r6 = $_POST['GL'];
-$r7 = $_POST['NA'];
+
 	//Artwork
 $i1 = $_POST['OA'];
 $i2 = $_POST['VLL'];
@@ -772,7 +709,7 @@ $po1 = $_POST['ORTCB'];
 $po2 = $_POST['PMU'];
 $notes = $_POST['Notes'];
 if(!empty($_POST['Order'])) { // if theres a DM refrence it continue to save transaction.
-if(($r1 == "Y") && ($r2 == "Y")&& ($r3 == "Y") && ($r4 == "Y")&& ($r5 == "Y")&& ($r6 == "Y")&& ($r7 == "Y")
+if(($r1 == "Y")
 && ($i1 == "Y")&& ($i2 == "Y")&& ($i3 == "Y")&& ($i4 == "Y")
 && ($a1 == "Y")&& ($a2 == "Y")&& ($a3 == "Y")&& ($a4 == "Y")&& ($a5 == "Y")&& ($a6 == "Y")&& ($a7 == "Y")&& ($a8 == "Y")&& ($a9 == "Y")
 && ($f1 == "Y")&& ($f2 == "Y")&& ($f3 == "Y")&& ($f4 == "Y")&& ($f5 == "Y")&& ($f6 == "Y")&& ($f7 == "Y")&& ($f8 == "Y")
@@ -781,13 +718,13 @@ if(($r1 == "Y") && ($r2 == "Y")&& ($r3 == "Y") && ($r4 == "Y")&& ($r5 == "Y")&& 
 && ($po1 == "Y")&& ($po2 == "Y"))
 	{
 
-$Acc = "YES";
+$Acc = "A";
 }
 else 
 {
-	$Acc = "NO";
+	$Acc = "I";
 }
-$insert = "INSERT INTO  qc VALUES(NULL, '$OR', '$IM', '$AS', '$QC', '$TE', '$udate', '$Acc', '$r1', '$r2', '$r3', '$r4', '$r5', '$r6', '$r7', '$i1', '$i2', '$i3', '$i4', '$a1', '$a2', '$a3', '$a4', '$a5', '$a6', '$a7', '$a8', '$a9', '$f1', '$f2', '$f3', '$f4', '$f5', '$f6', '$f7', '$f8', '$p1', '$p2', '$p3', '$p4', '$p5', '$p6', '$p7', '$u1', '$u2', '$u3', '$u4', '$u5', '$po1', '$po2', '$notes')";
+$insert = "INSERT INTO  qc VALUES(NULL, '$OR', '$IM', '$AS', '$QC', '$TE', '$udate', '$Acc', '$r1', '$i1', '$i2', '$i3', '$i4', '$a1', '$a2', '$a3', '$a4', '$a5', '$a6', '$a7', '$a8', '$a9', '$f1', '$f2', '$f3', '$f4', '$f5', '$f6', '$f7', '$f8', '$p1', '$p2', '$p3', '$p4', '$p5', '$p6', '$p7', '$u1', '$u2', '$u3', '$u4', '$u5', '$po1', '$po2', '$notes')";
 $insert_query = mysqli_query($connect, $insert);
 echo("<meta http-equiv='refresh' content='1'>"); 
 echo "<script type='text/javascript'>alert('".$OR." : Sucessfully saved!')</script>"; 
