@@ -1,11 +1,13 @@
  <?php  
  //load_data.php  
- $connect = mysqli_connect("localhost", "root", "", "branders");  
+ $connect = mysqli_connect("localhost", "itsupport", "Fic5#w0F", "branders");  
  $output = '';  
  if(isset($_POST["manager_id"]))  
  {  
       if($_POST["manager_id"] != '')  
-      {  
+ 
+
+     {  
            $sql = "SELECT Fullname, DMName from employee where PosCode = '4' and Team = '".$_POST["manager_id"]."' order by Fullname ASC ";  
       }  
       else  
@@ -20,7 +22,7 @@
       while($row = mysqli_fetch_array($result))  
       {  
           
-			$output .= '<option value="'.$row["Fullname"].'">'.$row[1].'</option>';
+			$output .= '<option value="'.$row["DMName"].'">'.$row[1].'</option>';
 			
 	  }  
 	  

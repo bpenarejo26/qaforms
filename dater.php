@@ -14,7 +14,7 @@ $connect = mysqli_connect($servername, $username, $password, $dbname);
 if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$sql = "SELECT Fullname from employee where PosCode = '4'order by Fullname ASC" ;
+$sql = "SELECT DMName from employee where PosCode = '4'order by DMName ASC" ;
 $result = mysqli_query($connect, $sql);
 $row = mysqli_fetch_array($result);
 $sql2 = "select Manager from employee group by Manager order by Manager ASC";

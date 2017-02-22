@@ -41,6 +41,13 @@ $query_method = "SELECT * FROM imprintmethod Order by Method ASC";
 $result_method = mysqli_query($connect, $query_method);
 $row_method = mysqli_fetch_array($result_method);
 
+//select item category 1/31/17
+$query_category = "SELECT * FROM itemcategory Order by Category ASC";
+$result_category = mysqli_query($connect, $query_category);
+$row_category = mysqli_fetch_array($result_category);
+
+
+
 if(isset($_POST['out'])){
 		$EasternTimeStamp =mktime(date('H')-5,date('i'),date('s'),date("m"),date("d"),date("Y"));
 	$udate = date('Y-m-d H:i:s',$EasternTimeStamp );
@@ -108,7 +115,7 @@ html {
         <li><a href="#"tabindex=-1>Home</a></li>
        
         
-           <li> <a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Report </a></li>
+          <li> <a href="dater_all.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Report </a></li>
             
 			 <li><a href="newpw.php?id=<?php echo $id;?>&x=<?php echo $auto;?>"tabindex=-1>Change password</a></li>
 			 <li><p align="right"><input type = "submit" name = "out" value = "Log-out" tabindex=-1/> </p></li>
@@ -131,10 +138,10 @@ html {
 		    else {
 			echo "0 results";}
 			?>
-      <td >&nbsp;</td>
-      <td ><?php $EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
-	$udate = date('Y-m-d H:i:s',$EasternTimeStamp ); echo $udate;?></td>
-   
+<td><strong>Quality Checker :&nbsp; &nbsp;
+        <input type="text" name="Checker"style="border:none" value ="<?php echo $row_user['Fullname'];?>" readonly tabindex=-1/> </strong></td>
+	  <td>&nbsp;</td>      
+
 	</tr>
     <tr>
       <td><strong>Associate:</strong></td>
@@ -150,12 +157,20 @@ html {
 			?>
 			
 	  </td>
-    
-      <td><strong>Quality Checker :&nbsp; &nbsp;
-        <input type="text" name="Checker"style="border:none" value ="<?php echo $row_user['Fullname'];?>" readonly tabindex=-1/> </strong></td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-	  <td>&nbsp;</td>
+    <td><strong>Item Category:  </strong>
+      &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <?php echo "<select name = 'Categ' >";
+	   echo "<option value='".N/A."'>-</option>";
+	  if (mysqli_num_rows($result_category) > 0) {
+			while($row_category = mysqli_fetch_assoc($result_category)) {
+			echo "<option value='".$row_category[Category]."'>$row_category[Category]</option>"; 
+														  }
+											  } 
+		    else {
+			echo "0 results";}
+			?></td>
+     <td ><?php $EasternTimeStamp =mktime(date('H')-6,date('i'),date('s'),date("m"),date("d"),date("Y"));
+	$udate = date('Y-m-d H:i:s',$EasternTimeStamp ); echo $udate;?></td>
+     
     </tr>
 	</tbody>
 	</table>
@@ -177,8 +192,9 @@ html {
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td width="8%">1.1</td>
-      <td colspan="2"></td>
+      <td colspan="2">Proof on Hold, Order rotated to</td>
       <td width="8%"><select name="BO">
+		<option value="">-</option>
    		<option value="Back Office">Back Office</option>
 		<option value="Production Manager Verification">Production Manager Verification</option>
 		<option value="Order Modification Required">Order Modification Required</option>
@@ -354,30 +370,9 @@ html {
       <td>&nbsp;</td>
       <td align="left" bgcolor="#C9E2F6"><strong>4.0</strong></td>
       <td colspan="5" align="left" bgcolor="#C9E2F6"><strong>FILM SET-UP</strong></td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>4.1</td>
-      <td colspan="2">Thin Lines w/ Black Strokes</td>
-      <td><select name="TLBS">
-   		<option value="Y"></option>
-		<option value="N">N</option>
-	</select></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>4.2</td>
-      <td colspan="2">Thick Lines w/ White Stroke</td>
-      <td><select name="TLWS">
-   		<option value="Y"></option>
-		<option value="N">N</option>
-	</select></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
+    </
+tr>
+   <tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>4.3</td>
@@ -402,7 +397,7 @@ html {
     <tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-      <td><p>4.5</p></td>
+      <td>4.5</td>
       <td colspan="2">Artboard Size</td>
       <td><select name="ASS">
    		<option value="Y"></option>
@@ -421,6 +416,7 @@ html {
 	</select></td>
       <td>&nbsp;</td>
     </tr>
+
     <tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
@@ -448,7 +444,7 @@ html {
       <td align="left" bgcolor="#C9E2F6"><strong>5.0</strong></td>
       <td colspan="5" align="left" bgcolor="#C9E2F6"><strong>PROOF SET-UP</strong></td>
     </tr>
-    <tr>
+<tr>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>5.1</td>
@@ -463,7 +459,7 @@ html {
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>5.2</td>
-      <td colspan="2"><p>Imprint Location</p></td>
+      <td colspan="2">Imprint Location</td>
       <td><select name="IL">
    		<option value="Y"></option>
 		<option value="N">N</option>
@@ -537,7 +533,7 @@ html {
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>6.1</td>
-      <td colspan="2">Wrong Proof/Film Uploaded</td>
+      <td colspan="2">Correct Proof/Film Uploaded</td>
       <td><select name="WPU">
    		<option value="Y"></option>
 		<option value="N">N</option>
@@ -548,7 +544,7 @@ html {
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>6.2</td>
-      <td colspan="2">Unnecessary/Double Upload</td>
+      <td colspan="2">No unnecessary/double uploads</td>
       <td><select name="UDU">
    		<option value="Y"></option>
 		<option value="N">N</option>
@@ -559,7 +555,7 @@ html {
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>6.3</td>
-      <td colspan="2">Missing Proof/Film</td>
+      <td colspan="2">Proof/film uploaded sucessfully</td>
       <td><select name="MPF">
    		<option value="Y"></option>
 		<option value="N">N</option>
@@ -570,7 +566,7 @@ html {
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>6.4</td>
-      <td colspan="2">Missing Underlay</td>
+      <td colspan="2">Underlay was uploaded</td>
       <td><select name="MU">
    		<option value="Y"></option>
 		<option value="N">N</option>
@@ -581,7 +577,7 @@ html {
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>6.5</td>
-      <td colspan="2">Missing .svg file</td>
+      <td colspan="2">SVG was uploaded</td>
       <td><select name="MSF">
    		<option value="Y"></option>
 		<option value="N">N</option>
@@ -662,7 +658,8 @@ if(isset($_POST['submit'])) {
 $TE = $search_row['Team'];		
 $OR = $_POST['Order'];
 $IM = $_POST['Method'];
-$QC = $_POST['Checker'];	
+$QC = $_POST['Checker'];
+$IC = $_POST['Categ'];	
 	//Rotation
 $r1 = $_POST['BO'];
 
@@ -718,13 +715,13 @@ if(($r1 == "Y")
 && ($po1 == "Y")&& ($po2 == "Y"))
 	{
 
-$Acc = "A";
+$Acc = "I";
 }
 else 
 {
-	$Acc = "I";
+	$Acc = "A";
 }
-$insert = "INSERT INTO  qc VALUES(NULL, '$OR', '$IM', '$AS', '$QC', '$TE', '$udate', '$Acc', '$r1', '$i1', '$i2', '$i3', '$i4', '$a1', '$a2', '$a3', '$a4', '$a5', '$a6', '$a7', '$a8', '$a9', '$f1', '$f2', '$f3', '$f4', '$f5', '$f6', '$f7', '$f8', '$p1', '$p2', '$p3', '$p4', '$p5', '$p6', '$p7', '$u1', '$u2', '$u3', '$u4', '$u5', '$po1', '$po2', '$notes')";
+$insert = "INSERT INTO  qc VALUES(NULL, '$OR', '$IM','$IC', '$AS', '$QC', '$TE', '$udate', '$Acc', '$r1', '$i1', '$i2', '$i3', '$i4', '$a1', '$a2', '$a3', '$a4', '$a5', '$a6', '$a7', '$a8', '$a9', '$f1', '$f2', '$f3', '$f4', '$f5', '$f6', '$f7', '$f8', '$p1', '$p2', '$p3', '$p4', '$p5', '$p6', '$p7', '$u1', '$u2', '$u3', '$u4', '$u5', '$po1', '$po2', '$notes')";
 $insert_query = mysqli_query($connect, $insert);
 echo("<meta http-equiv='refresh' content='1'>"); 
 echo "<script type='text/javascript'>alert('".$OR." : Sucessfully saved!')</script>"; 
